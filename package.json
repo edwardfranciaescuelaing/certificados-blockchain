@@ -20,7 +20,7 @@
     "@nomicfoundation/hardhat-toolbox": "^6.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.0",
     "@nomicfoundation/ignition-core": "^0.15.12",
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@latest",
+    "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@typechain/ethers-v6": "^0.5.0",
     "@typechain/hardhat": "^9.0.0",
     "@types/chai": "4.3.4",
@@ -37,5 +37,17 @@
     "typechain": "^8.3.0",
     "typescript": "^5.8.3"
   },
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.1",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edwardfranciaescuelaing/certificados-blockchain.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/edwardfranciaescuelaing/certificados-blockchain/issues"
+  },
+  "homepage": "https://github.com/edwardfranciaescuelaing/certificados-blockchain#readme"
 }

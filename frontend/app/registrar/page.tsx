@@ -12,101 +12,89 @@ import {
 import { useAccount } from "wagmi";
 import { useWriteCertificadoRegistrarUsuario } from "@/generated/wagmi";
 
+// ⚠️ IMPORTANTE: Agrega aquí la dirección de tu contrato
+const CONTRATO_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Reemplaza con la dirección real de tu contrato
+
 export default function RegistrarPage() {
-  // Estados del formulario
   const [nombre, setNombre] = useState("");
   const [esInstructor, setEsInstructor] = useState(false);
-
-  // Conexión con la wallet
   const { address, isConnected } = useAccount();
 
-  // Hook para llamar al contrato inteligente
   const {
-    write,
+    writeContract,
     isPending,
     isSuccess,
     error,
-  } = useWriteCertificadoRegistrarUsuario({
-    args: [nombre, esInstructor],
-    enabled: nombre.length > 2 && isConnected,
-  });
+  } = useWriteCertificadoRegistrarUsuario();
 
-  // Logs de depuración
-  console.log("Nombre:", nombre);
-  console.log("Es instructor:", esInstructor);
-  console.log("Hook habilitado:", nombre.length > 2 && isConnected);
-  console.log("write disponible:", !!write);
-  console.log("isPending:", isPending);
-  console.log("isSuccess:", isSuccess);
-  console.log("Error:", error);
+  // Función para manejar el envío
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Formulario enviado");
+    
+    if (!writeContract) {
+      console.log("writeContract no disponible");
+      return;
+    }
 
-  useEffect(() => {
-    console.log("write cambió:", write);
-  }, [write]);
+    try {
+      console.log("Ejecutando writeContract con:", {
+        address: CONTRATO_ADDRESS,
+        args: [nombre, esInstructor]
+      });
+      
+      await writeContract({
+        address: CONTRATO_ADDRESS,
+        args: [nombre, esInstructor],
+      });
+    } catch (err) {
+      console.error("Error al ejecutar transacción:", err);
+    }
+  };
 
   return (
     <div>
       <Title order={2} mb="md">Registrar Usuario</Title>
 
-      {/* Estado de conexión */}
       {!isConnected && (
         <Notification color="yellow" mt="md">
           Conecta tu wallet para registrar un usuario.
         </Notification>
       )}
 
-      {/* Estado actual del formulario */}
       <div style={{ marginBottom: "1rem", fontSize: "0.9rem", color: "#555" }}>
         <p>Estado del formulario:</p>
         <p>Nombre: <strong>{nombre}</strong></p>
         <p>Es instructor: <strong>{esInstructor ? "Sí" : "No"}</strong></p>
         <p>Wallet conectada: <strong>{isConnected ? "Sí" : "No"}</strong></p>
-        <p>Hook habilitado: <strong>{nombre.length > 2 && isConnected ? "Sí" : "No"}</strong></p>
-        <p>Función write disponible: <strong>{write ? "Sí" : "No"}</strong></p>
+        <p>Función writeContract disponible: <strong>{writeContract ? "Sí" : "No"}</strong></p>
       </div>
 
-      {/* Formulario */}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log("Formulario enviado");
-          if (write) {
-            console.log("Ejecutando write con:", nombre, esInstructor);
-            write();
-          } else {
-            console.log("La función write no está disponible aún.");
-          }
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <Stack>
           <TextInput
             label="Nombre"
             value={nombre}
-            onChange={(e) => {
-              const value = e.currentTarget.value;
-              console.log("Nombre actualizado a:", value);
-              setNombre(value);
-            }}
+            onChange={(e) => setNombre(e.currentTarget.value)}
             required
           />
 
           <Checkbox
             label="¿Es instructor?"
             checked={esInstructor}
-            onChange={(e) => {
-              const checked = e.currentTarget.checked;
-              console.log("Es instructor actualizado a:", checked);
-              setEsInstructor(checked);
-            }}
+            onChange={(e) => setEsInstructor(e.currentTarget.checked)}
           />
 
-          <Button type="submit" loading={isPending}>
+          <Button 
+            type="submit" 
+            loading={isPending}
+            disabled={!isConnected || nombre.length < 3}
+          >
             Registrar
           </Button>
         </Stack>
       </form>
 
-      {/* Notificaciones de resultado */}
       {isSuccess && (
         <Notification color="green" mt="md">
           Usuario registrado correctamente.

@@ -73,8 +73,8 @@
         "Lock"
       ]
     },
-    "C:\\Users\\Gloria  Zulma\\Documents\\GitHub\\certificados-blockchain\\contracts\\Certificado.sol": {
-      "lastModificationDate": 1752961812185,
+    "C:\\Users\\Gloria  Zulma\\Documents\\proyecto\\certificados-blockchain-1\\contracts\\Certificado.sol": {
+      "lastModificationDate": 1752980246686,
       "contentHash": "bde81d5c926b3aca8d269be6f30cc122",
       "sourceName": "contracts/Certificado.sol",
       "solcConfig": {
@@ -109,9 +109,9 @@
         "Certificado"
       ]
     },
-    "C:\\Users\\Gloria  Zulma\\Documents\\GitHub\\certificados-blockchain\\contracts\\Lock.sol": {
-      "lastModificationDate": 1752961812201,
-      "contentHash": "7eee587c347fe6b1de50c96688cb9477",
+    "C:\\Users\\Gloria  Zulma\\Documents\\proyecto\\certificados-blockchain-1\\contracts\\Lock.sol": {
+      "lastModificationDate": 1752980246687,
+      "contentHash": "642fa52ab63153524e2438211810ea7e",
       "sourceName": "contracts/Lock.sol",
       "solcConfig": {
         "version": "0.8.28",

@@ -52,14 +52,32 @@ export default function RegistrarPage() {
     }
   };
 
+  const conectarWallet = async () => {
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        // La conexión se reflejará automáticamente por wagmi
+      } catch (err) {
+        console.error("Usuario rechazó la conexión", err);
+      }
+    } else {
+      alert("MetaMask no está instalado");
+    }
+  };
+
   return (
     <div>
       <Title order={2} mb="md">Registrar Usuario</Title>
 
       {!isConnected && (
-        <Notification color="yellow" mt="md">
-          Conecta tu wallet para registrar un usuario.
-        </Notification>
+        <>
+          <Notification color="yellow" mt="md">
+            Conecta tu wallet para registrar un usuario.
+          </Notification>
+          <Button mt="md" onClick={conectarWallet}>
+            Conectar Wallet
+          </Button>
+        </>
       )}
 
       <div style={{ marginBottom: "1rem", fontSize: "0.9rem", color: "#555" }}>

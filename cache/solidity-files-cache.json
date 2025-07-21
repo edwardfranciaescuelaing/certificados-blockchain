@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\alexa\\Documents\\Maestria\\BAIA\\certificado-academico\\contracts\\Certificado.sol": {
-      "lastModificationDate": 1753048845351,
-      "contentHash": "0b6e5a3da801df1a70148327b1e0aada",
+    "/Users/katherynrojas/Downloads/certificados-blockchain/certificados-blockchain/contracts/Certificado.sol": {
+      "lastModificationDate": 1753118119608,
+      "contentHash": "9cd4cc0d36297618d7b8bd126954c51d",
       "sourceName": "contracts/Certificado.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -37,8 +37,8 @@
         "Certificado"
       ]
     },
-    "C:\\Users\\alexa\\Documents\\Maestria\\BAIA\\certificado-academico\\contracts\\Lock.sol": {
-      "lastModificationDate": 1752932335037,
+    "/Users/katherynrojas/Downloads/certificados-blockchain/certificados-blockchain/contracts/Lock.sol": {
+      "lastModificationDate": 1753118119608,
       "contentHash": "7eee587c347fe6b1de50c96688cb9477",
       "sourceName": "contracts/Lock.sol",
       "solcConfig": {

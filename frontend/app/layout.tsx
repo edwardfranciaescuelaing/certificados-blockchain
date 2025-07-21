@@ -13,10 +13,7 @@ import { config } from "../config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Shell from "@/components/Shell";
 
-// export const metadata = {
-//   title: "Mantine Next.js template",
-//   description: "I am using Mantine with Next.js!",
-// };
+
 const queryClient = new QueryClient();
 
 export default function RootLayout({ children }: { children: any }) {

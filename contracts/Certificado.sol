@@ -63,13 +63,14 @@ contract Certificado {
         string memory curso,
         string memory fecha,
         string memory hashContenido
-    ) external soloVerificado soloInstructor {
+    ) external soloVerificado soloInstructor  returns (bytes32){
         require(usuarios[estudiante].verificado, "Estudiante no verificado");
 
         bytes32 id = keccak256(abi.encodePacked(estudiante, curso, fecha, block.timestamp));
         certificados[id] = CertificadoData(estudiante, curso, fecha, hashContenido, false);
 
         emit CertificadoEmitido(id, estudiante, curso);
+        return id;
     }
 
     /**

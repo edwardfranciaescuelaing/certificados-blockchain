@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   TextInput,
   Checkbox,
@@ -12,12 +12,13 @@ import {
 import { useAccount } from "wagmi";
 import { useWriteCertificadoRegistrarUsuario } from "@/generated/wagmi";
 
-// ⚠️ IMPORTANTE: Agrega aquí la dirección de tu contrato
-const CONTRATO_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Reemplaza con la dirección real de tu contrato
+const CONTRATO_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 export default function RegistrarPage() {
   const [nombre, setNombre] = useState("");
   const [esInstructor, setEsInstructor] = useState(false);
+  const [usuarioId, setUsuarioId] = useState<string | null>(null);
+
   const { address, isConnected } = useAccount();
 
   const {
@@ -27,26 +28,24 @@ export default function RegistrarPage() {
     error,
   } = useWriteCertificadoRegistrarUsuario();
 
-  // Función para manejar el envío
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Formulario enviado");
-    
-    if (!writeContract) {
-      console.log("writeContract no disponible");
+
+    if (!writeContract || !address) {
+      console.log("writeContract o address no disponible");
       return;
     }
 
     try {
-      console.log("Ejecutando writeContract con:", {
-        address: CONTRATO_ADDRESS,
-        args: [nombre, esInstructor]
-      });
-      
+
+      console.log("Registrando usuario desde:", address);
       await writeContract({
         address: CONTRATO_ADDRESS,
         args: [nombre, esInstructor],
       });
+
+      setUsuarioId(address); // ✅ se guarda el ID del usuario (la dirección Ethereum)
     } catch (err) {
       console.error("Error al ejecutar transacción:", err);
     }
@@ -56,7 +55,6 @@ export default function RegistrarPage() {
     if (window.ethereum) {
       try {
         await window.ethereum.request({ method: "eth_requestAccounts" });
-        // La conexión se reflejará automáticamente por wagmi
       } catch (err) {
         console.error("Usuario rechazó la conexión", err);
       }
@@ -113,15 +111,16 @@ export default function RegistrarPage() {
         </Stack>
       </form>
 
-      {isSuccess && (
+      {isSuccess && usuarioId && (
         <Notification color="green" mt="md">
-          Usuario registrado correctamente.
+          ✅ Usuario registrado correctamente.<br />
+          <strong>ID:</strong> <code>{usuarioId}</code>
         </Notification>
       )}
 
       {error && (
         <Notification color="red" mt="md">
-          Error: {error.message}
+          ❌ Error: {error.message}
         </Notification>
       )}
     </div>

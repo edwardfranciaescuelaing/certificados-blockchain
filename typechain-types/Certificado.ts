@@ -211,7 +211,7 @@ export interface Certificado extends BaseContract {
       fecha: string,
       hashContenido: string
     ],
-    [void],
+    [string],
     "nonpayable"
   >;
 
@@ -278,7 +278,7 @@ export interface Certificado extends BaseContract {
       fecha: string,
       hashContenido: string
     ],
-    [void],
+    [string],
     "nonpayable"
   >;
   getFunction(

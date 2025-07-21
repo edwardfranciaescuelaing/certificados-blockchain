@@ -1,6 +1,5 @@
-
 "use client";
-import '@mantine/dates/styles.css';
+import "@mantine/dates/styles.css";
 
 import { useState } from "react";
 import {
@@ -21,32 +20,31 @@ export default function EmitirPage() {
   const [curso, setCurso] = useState("");
   const [fecha, setFecha] = useState("");
   const [hashContenido, setHashContenido] = useState("");
+  const [certificadoId, setCertificadoId] = useState<string | null>(null);
 
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
 
   const {
-    writeContract,
+    writeContractAsync,
     isPending,
-    isSuccess,
     error,
   } = useWriteCertificadoEmitirCertificado();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Intentando emitir:", estudiante, curso, fecha, hashContenido);
 
-    if (!writeContract) {
-      console.log("writeContract no disponible");
-      return;
-    }
+    if (!writeContractAsync) return;
 
     try {
-      await writeContract({
+      const id = await writeContractAsync({
         address: CONTRATO_ADDRESS,
         args: [estudiante, curso, fecha, hashContenido],
       });
+
+      console.log("✅ ID del certificado emitido:", id);
+      setCertificadoId(id as string);
     } catch (err) {
-      console.error("Error al emitir certificado:", err);
+      console.error("❌ Error al emitir certificado:", err);
     }
   };
 
@@ -77,16 +75,6 @@ export default function EmitirPage() {
         </>
       )}
 
-      <div style={{ marginBottom: "1rem", fontSize: "0.9rem", color: "#555" }}>
-        <p>Estado del formulario:</p>
-        <p>Estudiante: <strong>{estudiante}</strong></p>
-        <p>Curso: <strong>{curso}</strong></p>
-        <p>Fecha: <strong>{fecha}</strong></p>
-        <p>Hash: <strong>{hashContenido}</strong></p>
-        <p>Wallet conectada: <strong>{isConnected ? "Sí" : "No"}</strong></p>
-        <p>Función writeContract disponible: <strong>{writeContract ? "Sí" : "No"}</strong></p>
-      </div>
-
       <form onSubmit={handleSubmit}>
         <Stack>
           <TextInput
@@ -110,19 +98,18 @@ export default function EmitirPage() {
             disabled={!isConnected}
           />
 
-         <DateInput
-  label="Fecha"
-  placeholder="Selecciona la fecha"
-  value={fecha ? new Date(fecha + "T00:00:00") : null}
-  onChange={(value) => {
-    if (value) {
-      // Guarda la fecha en formato YYYY-MM-DD
-      const fechaISO = value.toString().split("T")[0];
-      setFecha(fechaISO);
-    }
-  }}
-  required
-  disabled={!isConnected}
+          <DateInput
+            label="Fecha"
+            placeholder="Selecciona la fecha"
+            value={fecha ? new Date(fecha + "T00:00:00") : null}
+            onChange={(value) => {
+              if (value) {
+                const fechaISO = value.toString().split("T")[0];
+                setFecha(fechaISO);
+              }
+            }}
+            required
+            disabled={!isConnected}
           />
 
           <TextInput
@@ -149,15 +136,16 @@ export default function EmitirPage() {
         </Stack>
       </form>
 
-      {isSuccess && (
+      {certificadoId && (
         <Notification color="green" mt="md">
-          Certificado emitido correctamente.
+          ✅ Certificado emitido con ID:<br />
+          <code>{certificadoId}</code>
         </Notification>
       )}
 
       {error && (
         <Notification color="red" mt="md">
-          Error: {error.message}
+          ❌ Error: {error.message}
         </Notification>
       )}
     </div>

@@ -93,7 +93,7 @@ export const certificadoAbi = [
       { name: 'hashContenido', internalType: 'string', type: 'string' },
     ],
     name: 'emitirCertificado',
-    outputs: [],
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
     stateMutability: 'nonpayable',
   },
   {

@@ -159,7 +159,7 @@ export default function AutorizarCertificados() {
           <td colSpan={6}>
             <Group>
               <Loader size="xs" />
-              <Text size="sm">Cargando certificado {id.slice(0, 10)}...</Text>
+              <Text size="sm">Cargando certificado {id}</Text>
             </Group>
           </td>
         </tr>
@@ -171,7 +171,7 @@ export default function AutorizarCertificados() {
         <tr>
           <td colSpan={6}>
             <Text color="red" size="sm">
-              Error al cargar certificado {id.slice(0, 10)}...
+              Error al cargar certificado {id}
               <Button size="xs" variant="subtle" onClick={() => refetch()} ml="sm">
                 Reintentar
               </Button>
@@ -187,7 +187,7 @@ export default function AutorizarCertificados() {
       <tr key={id}>
         <td>
           <Text size="xs" style={{ fontFamily: "monospace" }}>
-            {id.slice(0, 10)}...
+            {id}
           </Text>
         </td>
         <td>

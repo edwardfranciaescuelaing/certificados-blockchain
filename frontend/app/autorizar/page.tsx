@@ -30,6 +30,13 @@ interface CertificadoDetalle {
   autorizado: boolean;
 }
 
+// `AutorizarCertificados` es el componente principal exportado en este archivo.
+// Este componente se encarga de gestionar la visualización y autorización de certificados emitidos.
+// Incluye funcionalidades como:
+// - Cargar certificados desde eventos históricos.
+// - Escuchar nuevos eventos de emisión y autorización de certificados.
+// - Mostrar una tabla con los certificados pendientes y autorizados.
+// - Permitir la autorización de certificados mediante interacción con un contrato inteligente.
 export default function AutorizarCertificados() {
   const { address, isConnected } = useAccount();
   const publicClient = usePublicClient();

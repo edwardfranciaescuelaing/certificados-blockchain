@@ -274,7 +274,7 @@ export default function AutorizarCertificados() {
           )}
         </Notification>
       ) : (
-        <Table highlightOnHover withBorder mt="md">
+        <Table highlightOnHover style={{ border: "1px solid #ddd" }} mt="md">
           <thead>
             <tr>
               <th>ID</th>
